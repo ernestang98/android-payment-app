@@ -17,12 +17,20 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+
+// https://code.luasoftware.com/tutorials/android/android-use-recylerview-as-viewpager/
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,27 +42,80 @@ public class MainActivity extends AppCompatActivity {
     private final int T05VOID_LATEST = 4;
     private SharedPreferences sharedPref;
 
+    List<ChargerObject> sampleData = new ArrayList<>(
+        Arrays.asList(
+            new ChargerObject(
+                    "AC1",
+                    "22 kWh",
+                    "Condo A",
+                    "HKD1.50/kWh",
+                    "Approx time for full charge if you're at 10% - 30% is 5hrs"
+            ),
+            new ChargerObject(
+                    "AC2",
+                    "23 kWh",
+                    "Condo B",
+                    "HKD1.50/kWh",
+                    "Approx time for full charge if you're at 10% - 30% is 5hrs"
+            ),
+            new ChargerObject(
+                    "AC3",
+                    "24 kWh",
+                    "Condo C",
+                    "HKD1.50/kWh",
+                    "Approx time for full charge if you're at 10% - 30% is 5hrs"
+            )
+//            ),
+//            new ChargerObject(
+//                    "AC4",
+//                    "25 kWh",
+//                    "Condo D",
+//                    "HKD1.50/kWh",
+//                    "Approx time for full charge if you're at 10% - 30% is 5hrs"
+//            )
+        )
+    );
+
+    // Uncomment SnapHelper to enable Page Snap
+    // I cannot do up a 1 row 2 column LayoutManager, so I designed my XML to have 2 charger at once (limitation)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myDialog = new Dialog(this);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        ImageView beepLogo = findViewById(R.id.logo);
-        beepLogo.getLayoutParams().height = height / 8;
+        RecyclerView chargerList = findViewById(R.id.list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        chargerList.setLayoutManager(layoutManager);
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(chargerList);
 
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isPreAuth = sharedPref.getBoolean("isPreAuthSession", false);
-        Log.i(TAG, String.valueOf(isPreAuth));
+        ChargerListAdapter chargerListAdapter = new ChargerListAdapter(this, sampleData, new ClickListener() {
+            @Override
+            public void onCardClicked(int position) {
+                Log.i(TAG, "Move to 2nd screen");
+            }
+        });
 
-        if (isPreAuth) {
-            Button auth = findViewById(R.id.button2);
-            auth.setText("Capture");
-        }
+        chargerList.setAdapter(chargerListAdapter);
+        Log.i(TAG, String.valueOf(chargerList.getAdapter().getItemCount()));
+
+
+
+//        myDialog = new Dialog(this);
+//        DisplayMetrics displayMetrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//        int height = displayMetrics.heightPixels;
+//        ImageView beepLogo = findViewById(R.id.logo);
+//        beepLogo.getLayoutParams().height = height / 8;
+//
+//        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        boolean isPreAuth = sharedPref.getBoolean("isPreAuthSession", false);
+//        Log.i(TAG, String.valueOf(isPreAuth));
+//
+//        if (isPreAuth) {
+//            Button auth = findViewById(R.id.button2);
+//            auth.setText("Capture");
+//        }
 
     }
 
