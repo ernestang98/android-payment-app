@@ -1,6 +1,12 @@
 package tech.beepbeep.beept05;
 
-public class ChargerObject {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Date;
+
+public class ChargerObject implements Serializable {
     private String chargerName;
     private String chargerPower;
     private String chargerLocation;
@@ -59,4 +65,19 @@ public class ChargerObject {
     public void setChargerDescription(String chargerDescription) {
         this.chargerDescription = chargerDescription;
     }
+
+    @Override
+    public String toString() {
+        return "Charger Name: "
+                + this.chargerName
+                + ", Charger Power: "
+                + this.chargerPower
+                + ", Charger Location: "
+                + this.chargerLocation
+                + ", Charger Price: "
+                + this.chargerPrice
+                + ", Charger Description: "
+                + this.chargerDescription;
+    }
+
 }

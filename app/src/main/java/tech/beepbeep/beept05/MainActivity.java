@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+// https://stackoverflow.com/questions/37621934/inflateexception-binary-xml-file-line-8-error-inflating-class-imageview
 // https://code.luasoftware.com/tutorials/android/android-use-recylerview-as-viewpager/
 
 public class MainActivity extends AppCompatActivity {

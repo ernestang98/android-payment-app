@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="tech.beepbeep.beept05">
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/>
+          xmlns:tools="http://schemas.android.com/tools"
+          package="tech.beepbeep.beept05">
+
+    <uses-permission
+            android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+            tools:ignore="ScopedStorage"/>
+
     <application
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.BeepT05">
+        <activity android:name=".InfoActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
                 android:name=".LoadingActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"/>
@@ -16,6 +23,7 @@
                 android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
