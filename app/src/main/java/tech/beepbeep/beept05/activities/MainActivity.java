@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05;
+package tech.beepbeep.beept05.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tech.beepbeep.beept05.R;
 import tech.beepbeep.beept05.adapters.ChargerListAdapter;
 import tech.beepbeep.beept05.models.ChargerObject;
 import tech.beepbeep.beept05.utils.BeepPreAuthException;
@@ -30,16 +31,11 @@ import java.util.UUID;
 // https://stackoverflow.com/questions/37621934/inflateexception-binary-xml-file-line-8-error-inflating-class-imageview
 // https://code.luasoftware.com/tutorials/android/android-use-recylerview-as-viewpager/
 // https://www.figma.com/file/FKgC7gb2UHXOpMWunWBWq0/EV-Charger-CC-Terminal-UI-Draft?node-id=1%3A171
+// https://stackoverflow.com/questions/8631095/how-to-prevent-going-back-to-the-previous-activity
 
 public class MainActivity extends AppCompatActivity {
 
-    private Dialog myDialog;
     private final String TAG = "MAIN-ACTIVITY";
-    private final int T05PAY_CODE = 1;
-    private final int T05PRE_AUTH_CODE = 2;
-    private final int T05POST_AUTH_CODE = 3;
-    private final int T05VOID_LATEST = 4;
-    private SharedPreferences sharedPref;
 
     List<ChargerObject> sampleData = new ArrayList<>(
         Arrays.asList(

@@ -13,14 +13,17 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.BeepT05">
-        <activity android:name=".activities.InfoActivity"
-                  android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".activities.ChargingActivity">
+        </activity>
         <activity
-                android:name=".MainActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:name=".activities.InfoActivity"
+                android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+                android:name=".activities.MainActivity"
+                android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".Main" android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
