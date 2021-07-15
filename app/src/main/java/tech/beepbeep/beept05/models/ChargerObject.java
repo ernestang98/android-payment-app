@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05;
+package tech.beepbeep.beept05.models;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -1,8 +1,7 @@
-package tech.beepbeep.beept05;
+package tech.beepbeep.beept05.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
+import tech.beepbeep.beept05.R;
+import tech.beepbeep.beept05.activities.InfoActivity;
+import tech.beepbeep.beept05.models.ChargerObject;
+import tech.beepbeep.beept05.utils.ClickListener;
 
-import java.io.*;
 import java.util.List;
 
 // https://howtodoinjava.com/java/serialization/custom-serialization-readobject-writeobject/
@@ -27,7 +29,7 @@ public class ChargerListAdapter extends RecyclerView.Adapter<ChargerListAdapter.
     public ClickListener clickListener;
 
     // data is passed into the constructor
-    ChargerListAdapter(Context context, List<ChargerObject> listOfChargers, ClickListener clickListener) {
+    public ChargerListAdapter(Context context, List<ChargerObject> listOfChargers, ClickListener clickListener) {
         this.context = context;
         this.listOfChargers = listOfChargers;
         this.clickListener = clickListener;
