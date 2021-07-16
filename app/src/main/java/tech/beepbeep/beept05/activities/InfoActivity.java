@@ -13,20 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import com.google.gson.Gson;
-import org.json.JSONException;
 import org.json.JSONObject;
 import tech.beepbeep.beept05.R;
 import tech.beepbeep.beept05.models.ChargerObject;
-import tech.beepbeep.beept05.utils.BeepPreAuthException;
-import tech.beepbeep.beept05.utils.DatabaseHandler;
-
-import static tech.beepbeep.beept05.utils.Utils.logActivityResult;
-import static tech.beepbeep.beept05.utils.Utils.createPreAuthIntentForPreAuthReq;
+import tech.beepbeep.beept05.utils.*;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.HashSet;
-import java.util.Set;
+
+import static tech.beepbeep.beept05.utils.Utils.*;
 
 // Charger ID -> NULL/PHONE
 // PHONE -> NULL/[{ CHARGER ID : SESSION ID }]
@@ -44,23 +38,25 @@ public class InfoActivity extends AppCompatActivity {
     private TextView chargerPrice;
     private TextView chargerDescription;
     private EditText phoneNumber;
+    private static ChargerObject chargerObject;
+    private static boolean chargerIdAvailability;
 
     private final DatabaseHandler db = new DatabaseHandler(this);
-    private final ChargerObject chargerObject = new Gson()
-            .fromJson(getIntent().getStringExtra("data"), ChargerObject.class);
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        System.out.println(chargerObject);
+//        db.dropTable();
+//        this.deleteDatabase("ChargerManager");
+        chargerObject = new Gson()
+                .fromJson(getIntent().getStringExtra("data"), ChargerObject.class);
+        chargerIdAvailability = db.checkIfChargerIsVacant(chargerObject.getChargerId());
         myDialog = new Dialog(this);
         // check if charger is tagged to phoneNumber
 
-        String chargerIdAvailability = sharedPref.getString(chargerObject.getChargerId(), "NULL");
-        String chargerIdAvailability = db.getPhoneNumberTaggedToCharger(chargerObject.getChargerId());
-        if (chargerIdAvailability.equals("NULL")) {
+        if (chargerIdAvailability) {
             setContentView(R.layout.activity_info);
             chargerName = findViewById(R.id.textView3);
             chargerName.setText(chargerObject.getChargerName());
@@ -79,7 +75,58 @@ public class InfoActivity extends AppCompatActivity {
         }
         else {
             setContentView(R.layout.activity_charging);
+
+            chargerName = findViewById(R.id.textView111);
+            chargerName.setText(chargerObject.getChargerName());
+
+            chargerPower = findViewById(R.id.textView11);
+            chargerPower.setText(chargerObject.getChargerPower());
         }
+    }
+
+    public void sendRequest(View v) {
+        if (chargerIdAvailability) {
+            sendChargingRequest(v);
+        }
+        else {
+            sendCaptureRequest(v);
+        }
+    }
+
+    public void sendCaptureRequest(View v) {
+        ImageView btnClose;
+        CardView btnSend;
+        myDialog.setContentView(R.layout.activity_popup);
+        btnClose = myDialog.findViewById(R.id.iconNext);
+        btnSend = myDialog.findViewById(R.id.cardView2);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    phoneNumber = myDialog.findViewById(R.id.phone);
+                    String phoneEntered = phoneNumber.getText().toString();
+                    if (phoneEntered.equals(db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 1))) {
+                        String maxAmount = "1";
+                        Intent intent = createPreAuthIntentForPreAuthReq(maxAmount, db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 2));
+                        startActivityForResult(intent, T05POST_AUTH_CODE);
+                        myDialog.dismiss();
+                    }
+                    else {
+                        throw new BeepPostAuthException("Phone number do not match");
+                    }
+                } catch (UnsupportedEncodingException | BeepDbHandlerException | BeepPostAuthException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 
     public void sendChargingRequest(View v) {
@@ -93,9 +140,9 @@ public class InfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     // If you can come here means charge_id is tagged to NULL
-                    String maxAmount = "1";
-                    String preAuthText = "Set Pre-Auth Text here!";
-                    Intent intent = createPreAuthIntentForPreAuthReq(maxAmount, preAuthText);
+                    String amount = "1";
+                    String preAuthText = "Pre-auth text";
+                    Intent intent = createPreAuthIntentForPreAuthReq(amount, preAuthText);
                     startActivityForResult(intent, T05PRE_AUTH_CODE);
                     myDialog.dismiss();
                 } catch (UnsupportedEncodingException e) {
@@ -113,14 +160,14 @@ public class InfoActivity extends AppCompatActivity {
         myDialog.show();
     }
 
-      @Override
+     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         logActivityResult(requestCode, resultCode, data, TAG);
 
         try {
             if (requestCode != T05POST_AUTH_CODE && requestCode != T05PRE_AUTH_CODE) {
-                throw new BeepPreAuthException("Unsupported error code! Only accept PreAuth as of now!");
+                throw new BeepException("Unsupported error code! Only accept PreAuth as of now!");
             }
             String resJSONString = data.getStringExtra("response");
             JSONObject resJSON = new JSONObject(resJSONString);
@@ -130,51 +177,47 @@ public class InfoActivity extends AppCompatActivity {
             }
 
             if (requestCode == T05PRE_AUTH_CODE) {
-                String chargerIsAvailable = sharedPref.getString(chargerObject.getChargerId(), "NULL");
-                if (!chargerIsAvailable.equals("NULL")) {
-                    throw new BeepPreAuthException("You are pre-authing... MUST BE NULL, something is wrong");
+                if (!chargerIdAvailability) {
+                    throw new BeepPreAuthException("You are pre-authing... MUST BE vacant, something is wrong");
                 }
                 // only if you are successful will you want to tag the chargerID to the phoneNumber
                 phoneNumber = myDialog.findViewById(R.id.phone);
                 String phoneString = phoneNumber.getText().toString();
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(chargerObject.getChargerId(), phoneString);
-
-                // Check if number exists in numberKeys
-                Set<String> phoneNumberSet = sharedPref.getStringSet("phoneNumberSet", new HashSet<>());
-                if (phoneNumberSet.isEmpty()) {
-                    phoneNumberSet.add(phoneString);
-                    editor.putStringSet("phoneNumberSet", phoneNumberSet);
-                }
-                Set<String> setOfSessionIdTaggedToPhone = sharedPref.getStringSet(phoneString, new HashSet<>());
-                if (!setOfSessionIdTaggedToPhone.isEmpty()) {
-                    if (setOfSessionIdTaggedToPhone.contains(resJSON.getString("sessionId"))) {
-                        throw new BeepPreAuthException("Duplicate sessionId, how can this be?!");
-                    }
-                }
-                setOfSessionIdTaggedToPhone.add(resJSON.getString("sessionId"));
+                String sessionString = resJSON.getString("sessionId");
+                db.tagDetailsToCharger(chargerObject.getChargerId(), phoneString, sessionString);
 
                 // only apply changes if everything is successful!
-                editor.apply();
                 myDialog.dismiss();
+
                 finish();
                 Intent intent = new Intent(this, InfoActivity.class);
+                Gson gson = new Gson();
+                String stringData = gson.toJson(chargerObject);
+                intent.putExtra("data", stringData);
                 startActivity(intent);
             }
-            if (requestCode == T05POST_AUTH_CODE) {
-                String phoneNumberTaggedToChargerId = sharedPref.getString(chargerObject.getChargerId(), "NULL");
-                if (phoneNumberTaggedToChargerId.equals("NULL")) throw new BeepPreAuthException("You are post-authing... MUST BE NOT NULL, something is wrong");
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(chargerObject.getChargerId(), "NULL");
-                Set<String> setOfSessionIdTaggedToPhone = sharedPref.getStringSet(phoneNumberTaggedToChargerId, new HashSet<>());
-                if (setOfSessionIdTaggedToPhone.isEmpty() || !setOfSessionIdTaggedToPhone.contains(resJSON.getString("sessionId"))) throw new BeepPreAuthException("Session ID tagged to phone cannot be found!");
-                editor.apply();
+            if (requestCode == T05POST_AUTH_CODE) { ;
+                if (chargerIdAvailability) throw new BeepPostAuthException("You are post-authing... MUST BE occupied, something is wrong");
+                phoneNumber = myDialog.findViewById(R.id.phone);
+                String phoneString = phoneNumber.getText().toString();
+                String sessionString = db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 2);
+                boolean authenticate = db.authDetailsTaggedToChargerId(chargerObject.getChargerId(), sessionString, phoneString);
+                if (authenticate) {
+                    db.vacantTheCharger(chargerObject.getChargerId());
+                    myDialog.dismiss();
+                    finish();
+                    Intent intent = new Intent(this, InfoActivity.class);
+                    Gson gson = new Gson();
+                    String stringData = gson.toJson(chargerObject);
+                    intent.putExtra("data", stringData);
+                    startActivity(intent);
+                } else {
+                    throw new BeepDbHandlerException("Authentication somehow failed!");
+                }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (BeepPreAuthException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+     }
 
 }

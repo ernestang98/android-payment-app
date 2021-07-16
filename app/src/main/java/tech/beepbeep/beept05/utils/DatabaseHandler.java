@@ -7,6 +7,7 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -18,11 +19,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String CHARGER_TABLE = "charger";
     private static final String CHARGER_TABLE_ID = "charger_id";
-    private static final String CHARGE_TABLE_PHONE_NUMBER = "charger_phone";
-
-    private static final String SESSION_TABLE = "session";
-    private static final String SESSION_TABLE_ID = "session_id";
-    private static final String SESSION_TABLE_PHONE_NUMBER = "session_phone";
+    private static final String CHARGER_TABLE_PHONE_NUMBER = "charger_phone";
+    private static final String CHARGER_TABLE_SESSION_ID = "charger_session" ;
+    private static final String TAG = "DB-HANDLER";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,104 +29,142 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_SESSION_TABLE = "CREATE TABLE " + SESSION_TABLE + "("
-                + SESSION_TABLE_ID + " TEXT PRIMARY KEY," + SESSION_TABLE_PHONE_NUMBER + " TEXT" + ")";
-        db.execSQL(CREATE_SESSION_TABLE);
-
-        String CREATE_CHARGER_TABLE = "CREATE TABLE " + CHARGER_TABLE + "("
-                + CHARGER_TABLE_ID + " TEXT PRIMARY KEY," + CHARGE_TABLE_PHONE_NUMBER + " TEXT" + ")";
-        db.execSQL(CREATE_CHARGER_TABLE);
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE "
+                + CHARGER_TABLE
+                + "("
+                + CHARGER_TABLE_ID + " Text PRIMARY KEY,"
+                + CHARGER_TABLE_PHONE_NUMBER + " TEXT,"
+                + CHARGER_TABLE_SESSION_ID + " TEXT"
+                + ")";
+        db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + CHARGER_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + SESSION_TABLE);
         // Create tables again
         onCreate(db);
     }
 
-    public void tagPhoneNumberToCharger(String chargerId, String chargerPhoneNumber) {
+    public void tagDetailsToCharger(String chargerId, String chargerPhoneNumber, String chargerSessionId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(CHARGER_TABLE_ID, chargerId);
-        values.put(CHARGE_TABLE_PHONE_NUMBER, chargerPhoneNumber);
+        values.put(CHARGER_TABLE_PHONE_NUMBER, chargerPhoneNumber);
+        values.put(CHARGER_TABLE_SESSION_ID, chargerSessionId);
         db.insert(CHARGER_TABLE, null, values);
         db.close();
     }
 
-    public String getPhoneNumberTaggedToCharger(String chargerId) {
+    public boolean checkIfChargerIsVacant(String chargerId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(CHARGER_TABLE, new String[] { CHARGER_TABLE_ID,
-                        CHARGE_TABLE_PHONE_NUMBER }, CHARGER_TABLE_ID + "=?",
-                new String[] { String.valueOf(chargerId) }, null, null, null, null);
+        Cursor cursor = db.query(
+                CHARGER_TABLE,
+                new String[] {
+                    CHARGER_TABLE_ID,
+                    CHARGER_TABLE_PHONE_NUMBER,
+                    CHARGER_TABLE_SESSION_ID
+                },
+                CHARGER_TABLE_ID + "=?",
+                new String[] {
+                    String.valueOf(chargerId)
+                },
+                null, null, null, null
+        );
+        boolean result = cursor.moveToFirst();
+        System.out.println(result);
+        db.close();
+        cursor.close();
+        return !result;
+    }
+
+    public String returnValueTaggedToChargerId(String chargerId, int value) throws BeepDbHandlerException {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                CHARGER_TABLE,
+                new String[] {
+                        CHARGER_TABLE_ID,
+                        CHARGER_TABLE_PHONE_NUMBER,
+                        CHARGER_TABLE_SESSION_ID
+                },
+                CHARGER_TABLE_ID + "=?",
+                new String[] {
+                        String.valueOf(chargerId)
+                },
+                null, null, null, null
+        );
 
         if (cursor != null) {
             cursor.moveToFirst();
-            String phoneNumber = cursor.getString(1);
+            String phoneNumberRegistered = cursor.getString(value);
             cursor.close();
-            return phoneNumber;
+            db.close();
+            return phoneNumberRegistered;
         }
-        return "NULL";
+        else {
+            db.close();
+            throw new BeepDbHandlerException("charger id does not even exist!!");
+        }
     }
 
-    // code to get all contacts in a list view
-    public List<Contact> getAllContacts() {
-        List<Contact> contactList = new ArrayList<Contact>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+    public boolean authDetailsTaggedToChargerId(String chargerId, String sessionId, String phoneNumber) throws BeepDbHandlerException {
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.query(
+                CHARGER_TABLE,
+                new String[] {
+                        CHARGER_TABLE_ID,
+                        CHARGER_TABLE_PHONE_NUMBER,
+                        CHARGER_TABLE_SESSION_ID
+                },
+                CHARGER_TABLE_ID + "=?",
+                new String[] {
+                        String.valueOf(chargerId)
+                },
+                null, null, null, null
+        );
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Contact contact = new Contact();
-                contact.setID(Integer.parseInt(cursor.getString(0)));
-                contact.setName(cursor.getString(1));
-                contact.setPhoneNumber(cursor.getString(2));
-                // Adding contact to list
-                contactList.add(contact);
-            } while (cursor.moveToNext());
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String phoneNumberRegistered = cursor.getString(1);
+            System.out.println("PHONE NUMBER: " + phoneNumberRegistered);
+            String sessionIdRegistered = cursor.getString(2);
+            System.out.println("SESSION ID: " + sessionIdRegistered);
+            System.out.println(sessionId);
+            if (!phoneNumberRegistered.equals(phoneNumber)) throw new BeepDbHandlerException("Phone number does not match");
+            if (!sessionIdRegistered.equals(sessionId)) throw new BeepDbHandlerException("Session id does not match");
+            cursor.close();
+            db.close();
+            return true;
         }
-
-        // return contact list
-        return contactList;
-    }
-
-    // code to update the single contact
-    public int updateContact(Contact contact) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_PH_NO, contact.getPhoneNumber());
-
-        // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        else {
+            db.close();
+            throw new BeepDbHandlerException("charger id does not even exist!!");
+        }
     }
 
     // Deleting single contact
-    public void deleteContact(Contact contact) {
+    public void vacantTheCharger(String chargerId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        db.delete(
+            CHARGER_TABLE,
+            CHARGER_TABLE_ID + " = ?",
+            new String[] { chargerId }
+        );
         db.close();
     }
 
-    // Getting contacts Count
-    public int getContactsCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
+    public void dropTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + CHARGER_TABLE);
+        db.close();
+    }
 
-        // return count
-        return cursor.getCount();
+    public void createTable() {
+
     }
 
 }

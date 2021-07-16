@@ -20,9 +20,6 @@ import java.util.List;
 
 // https://howtodoinjava.com/java/serialization/custom-serialization-readobject-writeobject/
 // https://stackoverflow.com/questions/8887197/reliably-convert-any-object-to-string-and-then-back-again/8887244
-// SCHEMA:
-// Charger ID -> NULL/[OCCUPIED, PHONE]
-// PHONE -> NULL/SESSION_ID
 
 public class ChargerListAdapter extends RecyclerView.Adapter<ChargerListAdapter.ViewHolder> {
 
