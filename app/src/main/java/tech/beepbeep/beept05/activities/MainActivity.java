@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     List<ChargerObject> sampleData = new ArrayList<>(
         Arrays.asList(
             new ChargerObject(
+                    "CHARGER-01",
                     "AC1",
                     "22 kWh",
                     "Condo A",
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     "Approx time for full charge if you're at 10% - 30% is 5hrs"
             ),
             new ChargerObject(
+                    "CHARGER-02",
                     "AC2",
                     "23 kWh",
                     "Condo B",
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     "Approx time for full charge if you're at 10% - 30% is 5hrs"
             ),
             new ChargerObject(
+                    "CHARGER-03",
                     "AC3",
                     "24 kWh",
                     "Condo C",
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     "Approx time for full charge if you're at 10% - 30% is 5hrs"
             ),
             new ChargerObject(
+                    "CHARGER-04",
                     "AC4",
                     "25 kWh",
                     "Condo D",
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     "Approx time for full charge if you're at 10% - 30% is 5hrs"
             ),
             new ChargerObject(
+                    "CHARGER-05",
                     "AC5",
                     "26 kWh",
                     "Condo E",
@@ -84,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 //            )
         )
     );
+
+
 
     // Uncomment SnapHelper to enable Page Snap
     // I cannot do up a 1 row 2 column LayoutManager, so I designed my XML to have 2 charger at once (limitation)

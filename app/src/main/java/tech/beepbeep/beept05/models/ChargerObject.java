@@ -7,18 +7,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ChargerObject implements Serializable {
+
+    private String chargerId;
     private String chargerName;
     private String chargerPower;
     private String chargerLocation;
     private String chargerPrice;
     private String chargerDescription;
+    private Boolean chargerIsAvailable;
+
     public ChargerObject(
+            String chargerId,
             String chargerName,
             String chargerPower,
             String chargerLocation,
             String chargerPrice,
             String chargerDescription
     ) {
+        this.chargerId = chargerId;
         this.chargerName = chargerName;
         this.chargerPower = chargerPower;
         this.chargerLocation = chargerLocation;
@@ -66,9 +72,27 @@ public class ChargerObject implements Serializable {
         this.chargerDescription = chargerDescription;
     }
 
+    public String getChargerId() {
+        return chargerId;
+    }
+
+    public void setChargerId(String chargerId) {
+        this.chargerId = chargerId;
+    }
+
+    public Boolean getChargerIsAvailable() {
+        return chargerIsAvailable;
+    }
+
+    public void setChargerIsAvailable(Boolean chargerIsAvailable) {
+        this.chargerIsAvailable = chargerIsAvailable;
+    }
+
     @Override
     public String toString() {
-        return "Charger Name: "
+        return "Charger Id: "
+                + this.chargerId
+                + "Charger Name: "
                 + this.chargerName
                 + ", Charger Power: "
                 + this.chargerPower
