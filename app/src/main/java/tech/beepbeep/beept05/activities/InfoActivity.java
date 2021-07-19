@@ -18,6 +18,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import com.google.gson.Gson;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 import tech.beepbeep.beept05.R;
 import tech.beepbeep.beept05.models.ChargerObject;
 import tech.beepbeep.beept05.utils.*;
@@ -110,7 +111,12 @@ public class InfoActivity extends AppCompatActivity {
                 TextView totalChargeRate = tempDialog.findViewById(R.id.cf_main_group_subgroup_4_text);
                 totalChargeRate.setText("Charge Rate: " + chargerObject.getChargerCurrency() + chargerObject.getChargerPrice() + chargerObject.getChargerRate());
 
-                ImageView closeBtn = tempDialog.findViewById(R.id.cp_group_1_container_close);
+                TextView paymentType = tempDialog.findViewById(R.id.cf_main_group_subgroup_1_text);
+                @Nullable String paymentMethod = getIntent().getStringExtra("paymentMethod");
+                if (paymentMethod == null) paymentMethod = "Credit Card";
+                paymentType.setText("Payment Method: " + paymentMethod);
+
+                ImageView closeBtn = tempDialog.findViewById(R.id.cf_close_group_container_close);
                 closeBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -136,7 +142,7 @@ public class InfoActivity extends AppCompatActivity {
             chargerLocation = findViewById(R.id.ai_charger_location);
             chargerLocation.setText(chargerObject.getChargerLocation());
 
-            chargerPower = findViewById(R.id.cu_group_1_container_subgroup_text);
+            chargerPower = findViewById(R.id.ai_group_1_container_text);
             chargerPower.setText(chargerObject.getChargerPower() + chargerObject.getChargerPowerUnit());
 
             chargerPrice = findViewById(R.id.ai_charger_price);
@@ -148,14 +154,15 @@ public class InfoActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_charging);
 
-            chargerLocation = findViewById(R.id.cu_group_1_container_subgroup_text);
+            chargerLocation = findViewById(R.id.ac_group_1_container_1_text);
             chargerLocation.setText(chargerObject.getChargerLocation());
 
-            chargerName = findViewById(R.id.cf_main_group_subgroup_4_text);
+            chargerName = findViewById(R.id.ac_group_2_container_1_text);
             chargerName.setText(chargerObject.getChargerName());
 
             chargerPower = findViewById(R.id.ac_group_2_container_2_text);
             chargerPower.setText(chargerObject.getChargerPower() + chargerObject.getChargerPowerUnit());
+
             try {
                 String startingTime = db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 3);
                 Date start = new SimpleDateFormat(SimpleDateFormatString, Locale.ENGLISH).parse(startingTime);
@@ -166,7 +173,7 @@ public class InfoActivity extends AppCompatActivity {
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(difference);
                 long minutes = TimeUnit.MILLISECONDS.toMinutes(difference);
                 long hours = TimeUnit.MILLISECONDS.toHours(difference);
-                totalHours = findViewById(R.id.ai_about_charger_subheader);
+                totalHours = findViewById(R.id.ac_current_time);
                 totalHours.setText("Current time: " + seconds + " seconds");
                 final Handler someHandler = new Handler(getMainLooper());
                 someHandler.postDelayed(new Runnable() {
@@ -270,10 +277,11 @@ public class InfoActivity extends AppCompatActivity {
 
         try {
             if (requestCode != T05POST_AUTH_CODE && requestCode != T05PRE_AUTH_CODE) {
-                throw new BeepException("Unsupported error code! Only accept PreAuth as of now!");
+                throw new BeepException("Unsupported error code! Only accept PreAuth & PostAuth as of now!");
             }
             String resJSONString = data.getStringExtra("response");
             JSONObject resJSON = new JSONObject(resJSONString);
+            Log.i(TAG, resJSONString);
             Log.i(TAG, resJSON.getString("status"));
             if (!resJSON.getString("status").equals("Approved") || resultCode != RESULT_OK) {
                 throw new BeepPreAuthException("Transaction failed: " + resJSON.getString("message"));
@@ -307,6 +315,13 @@ public class InfoActivity extends AppCompatActivity {
                 boolean authenticate = db.authDetailsTaggedToChargerId(chargerObject.getChargerId(), sessionString, phoneString);
                 if (authenticate) {
                     String startTime = db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 3);
+                    String paymentMethod;
+                    try {
+                        paymentMethod = resJSON.getString("paymentType");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        paymentMethod = "Credit Card";
+                    }
                     db.vacantTheCharger(chargerObject.getChargerId());
                     myDialog.dismiss();
                     finish();
@@ -316,6 +331,7 @@ public class InfoActivity extends AppCompatActivity {
                     intent.putExtra("data", stringData);
                     intent.putExtra("launchEnding", true);
                     intent.putExtra("startTime", startTime);
+                    intent.putExtra("paymentMethod", paymentMethod);
                     startActivity(intent);
 
                 } else {
