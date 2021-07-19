@@ -9,9 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -20,23 +18,18 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import com.google.gson.Gson;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 import tech.beepbeep.beept05.R;
 import tech.beepbeep.beept05.models.ChargerObject;
 import tech.beepbeep.beept05.utils.*;
 
 import java.io.UnsupportedEncodingException;
 import java.text.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static tech.beepbeep.beept05.utils.Constants.HHMMDateFormat12Hrs;
 import static tech.beepbeep.beept05.utils.Constants.SimpleDateFormatString;
 import static tech.beepbeep.beept05.utils.Utils.*;
 
@@ -78,13 +71,13 @@ public class InfoActivity extends AppCompatActivity {
         if (launchEnding && timeStarted != null) {
             try {
                 Dialog tempDialog = new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-                tempDialog.setContentView(R.layout.charging_finish);
-                TextView chargerLoc = tempDialog.findViewById(R.id.textView9);
+                tempDialog.setContentView(R.layout.charger_finish);
+                TextView chargerLoc = tempDialog.findViewById(R.id.cf_main_group_header);
                 chargerLoc.setText(chargerObject.getChargerLocation());
-                TextView chargerName = tempDialog.findViewById(R.id.textView14);
+                TextView chargerName = tempDialog.findViewById(R.id.cf_main_group_subheader);
                 chargerName.setText(chargerObject.getChargerName());
 
-                DateFormat dateFormat = new SimpleDateFormat("hh.mm aa", Locale.ENGLISH);
+                DateFormat dateFormat = new SimpleDateFormat(HHMMDateFormat12Hrs, Locale.ENGLISH);
                 String dateString = dateFormat.format(new Date()).toString();
 
                 Calendar calendar = Calendar.getInstance();
@@ -92,7 +85,7 @@ public class InfoActivity extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int day   = calendar.get(Calendar.DAY_OF_MONTH);
                 String monthString = new DateFormatSymbols().getMonths()[month];
-                TextView endTime = tempDialog.findViewById(R.id.textView15);
+                TextView endTime = tempDialog.findViewById(R.id.cf_main_group_datetime);
                 endTime.setText(monthString + " " + year + ", " + dateString);
 
                 Date end = new Date();
@@ -104,20 +97,20 @@ public class InfoActivity extends AppCompatActivity {
                 long hours = TimeUnit.MILLISECONDS.toHours(difference);
 
                 NumberFormat formatter = NumberFormat.getCurrencyInstance();
-                TextView totalCost = tempDialog.findViewById(R.id.textView16);
+                TextView totalCost = tempDialog.findViewById(R.id.cf_main_group_cost);
                 totalCost.setText(chargerObject.getChargerCurrency() + " " + formatter.format(Double.parseDouble(chargerObject.getChargerPrice()) * seconds));
 
-                TextView totalChargeTime = tempDialog.findViewById(R.id.textView222);
+                TextView totalChargeTime = tempDialog.findViewById(R.id.cf_main_group_subgroup_2_text);
                 totalChargeTime.setText("Total Charge Time: " + hours + " hrs " + minutes % 60 + " mins " + seconds % 60 + " secs");
 
                 // Total charge amount = charge power * number of hours but I use seconds cause hours will be 0
-                TextView totalChargeAmount = tempDialog.findViewById(R.id.textView333);
+                TextView totalChargeAmount = tempDialog.findViewById(R.id.cf_main_group_subgroup_3_text);
                 totalChargeAmount.setText("Total Charge Amount: " + (int) (Integer.parseInt(chargerObject.getChargerPower()) * seconds) + "kWH");
 
-                TextView totalChargeRate = tempDialog.findViewById(R.id.textView111);
+                TextView totalChargeRate = tempDialog.findViewById(R.id.cf_main_group_subgroup_4_text);
                 totalChargeRate.setText("Charge Rate: " + chargerObject.getChargerCurrency() + chargerObject.getChargerPrice() + chargerObject.getChargerRate());
 
-                ImageView closeBtn = tempDialog.findViewById(R.id.iconNext);
+                ImageView closeBtn = tempDialog.findViewById(R.id.cp_group_1_container_close);
                 closeBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -137,31 +130,31 @@ public class InfoActivity extends AppCompatActivity {
 
         if (chargerIdAvailability) {
             setContentView(R.layout.activity_info);
-            chargerName = findViewById(R.id.textView3);
+            chargerName = findViewById(R.id.ai_charger_name);
             chargerName.setText(chargerObject.getChargerName());
 
-            chargerLocation = findViewById(R.id.textView4);
+            chargerLocation = findViewById(R.id.ai_charger_location);
             chargerLocation.setText(chargerObject.getChargerLocation());
 
-            chargerPower = findViewById(R.id.textView11);
+            chargerPower = findViewById(R.id.cu_group_1_container_subgroup_text);
             chargerPower.setText(chargerObject.getChargerPower() + chargerObject.getChargerPowerUnit());
 
-            chargerPrice = findViewById(R.id.textView5);
+            chargerPrice = findViewById(R.id.ai_charger_price);
             chargerPrice.setText("Price: " + chargerObject.getChargerCurrency() + chargerObject.getChargerPrice() + chargerObject.getChargerRate());
 
-            chargerDescription = findViewById(R.id.textView10);
+            chargerDescription = findViewById(R.id.ai_about_charger_subheader);
             chargerDescription.setText(chargerObject.getChargerDescription());
         }
         else {
             setContentView(R.layout.activity_charging);
 
-            chargerLocation = findViewById(R.id.textView11);
+            chargerLocation = findViewById(R.id.cu_group_1_container_subgroup_text);
             chargerLocation.setText(chargerObject.getChargerLocation());
 
-            chargerName = findViewById(R.id.textView111);
+            chargerName = findViewById(R.id.cf_main_group_subgroup_4_text);
             chargerName.setText(chargerObject.getChargerName());
 
-            chargerPower = findViewById(R.id.textView110);
+            chargerPower = findViewById(R.id.ac_group_2_container_2_text);
             chargerPower.setText(chargerObject.getChargerPower() + chargerObject.getChargerPowerUnit());
             try {
                 String startingTime = db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 3);
@@ -173,7 +166,7 @@ public class InfoActivity extends AppCompatActivity {
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(difference);
                 long minutes = TimeUnit.MILLISECONDS.toMinutes(difference);
                 long hours = TimeUnit.MILLISECONDS.toHours(difference);
-                totalHours = findViewById(R.id.textView10);
+                totalHours = findViewById(R.id.ai_about_charger_subheader);
                 totalHours.setText("Current time: " + seconds + " seconds");
                 final Handler someHandler = new Handler(getMainLooper());
                 someHandler.postDelayed(new Runnable() {
@@ -204,16 +197,16 @@ public class InfoActivity extends AppCompatActivity {
     public void sendCaptureRequest(View v) {
         ImageView btnClose;
         CardView btnSend;
-        myDialog.setContentView(R.layout.activity_popup);
-        btnClose = myDialog.findViewById(R.id.iconNext);
-        btnSend = myDialog.findViewById(R.id.cardView2);
-        TextView button = myDialog.findViewById(R.id.textView8);
+        myDialog.setContentView(R.layout.charger_popup);
+        btnClose = myDialog.findViewById(R.id.cp_group_1_container_close);
+        btnSend = myDialog.findViewById(R.id.cp_group_2_button);
+        TextView button = myDialog.findViewById(R.id.cp_group_2_button_container_text);
         button.setText("Stop Charging");
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    phoneNumber = myDialog.findViewById(R.id.phone);
+                    phoneNumber = myDialog.findViewById(R.id.cp_phone);
                     String phoneEntered = phoneNumber.getText().toString();
                     if (phoneEntered.equals(db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 1))) {
                         String maxAmount = "1";
@@ -242,9 +235,9 @@ public class InfoActivity extends AppCompatActivity {
     public void sendChargingRequest(View v) {
         ImageView btnClose;
         CardView btnSend;
-        myDialog.setContentView(R.layout.activity_popup);
-        btnClose = myDialog.findViewById(R.id.iconNext);
-        btnSend = myDialog.findViewById(R.id.cardView2);
+        myDialog.setContentView(R.layout.charger_popup);
+        btnClose = myDialog.findViewById(R.id.cp_group_1_container_close);
+        btnSend = myDialog.findViewById(R.id.cp_group_2_button);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,7 +284,7 @@ public class InfoActivity extends AppCompatActivity {
                     throw new BeepPreAuthException("You are pre-authing... MUST BE vacant, something is wrong");
                 }
                 // only if you are successful will you want to tag the chargerID to the phoneNumber
-                phoneNumber = myDialog.findViewById(R.id.phone);
+                phoneNumber = myDialog.findViewById(R.id.cp_phone);
                 String phoneString = phoneNumber.getText().toString();
                 String sessionString = resJSON.getString("sessionId");
                 db.tagDetailsToCharger(chargerObject.getChargerId(), phoneString, sessionString);
@@ -308,7 +301,7 @@ public class InfoActivity extends AppCompatActivity {
             }
             if (requestCode == T05POST_AUTH_CODE) { ;
                 if (chargerIdAvailability) throw new BeepPostAuthException("You are post-authing... MUST BE occupied, something is wrong");
-                phoneNumber = myDialog.findViewById(R.id.phone);
+                phoneNumber = myDialog.findViewById(R.id.cp_phone);
                 String phoneString = phoneNumber.getText().toString();
                 String sessionString = db.returnValueTaggedToChargerId(chargerObject.getChargerId(), 2);
                 boolean authenticate = db.authDetailsTaggedToChargerId(chargerObject.getChargerId(), sessionString, phoneString);

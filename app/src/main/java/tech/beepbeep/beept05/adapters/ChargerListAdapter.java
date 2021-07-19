@@ -66,10 +66,10 @@ public class ChargerListAdapter extends RecyclerView.Adapter<ChargerListAdapter.
             int firstHalf = position * 2;
             int secondHalf = firstHalf + 1;
 
-            TextView textView1 = itemView.findViewById(R.id.textView1);
-            TextView textView11 = itemView.findViewById(R.id.textView11);
+            TextView textView1 = itemView.findViewById(R.id.cu_group_1_container_header);
+            TextView textView11 = itemView.findViewById(R.id.cu_group_1_container_subgroup_text);
 
-            CardView cardView1 = itemView.findViewById(R.id.chargerView1);
+            CardView cardView1 = itemView.findViewById(R.id.cu_group_1);
             cardView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,11 +82,11 @@ public class ChargerListAdapter extends RecyclerView.Adapter<ChargerListAdapter.
             textView11.setText(listOfChargers.get(firstHalf).getChargerPower() + listOfChargers.get(firstHalf).getChargerPowerUnit());
 
             if (secondHalf < listOfChargers.size()) {
-                TextView textView2 = itemView.findViewById(R.id.textView2);
-                TextView textView22 = itemView.findViewById(R.id.textView22);
+                TextView textView2 = itemView.findViewById(R.id.cu_group_2_container_header);
+                TextView textView22 = itemView.findViewById(R.id.cu_group_2_container_subgroup_text);
                 textView2.setText(listOfChargers.get(secondHalf).getChargerName());
                 textView22.setText(listOfChargers.get(secondHalf).getChargerPower() + listOfChargers.get(secondHalf).getChargerPowerUnit());
-                CardView cardView2 = itemView.findViewById(R.id.chargerView2);
+                CardView cardView2 = itemView.findViewById(R.id.cu_group_2);
                 cardView2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -95,8 +95,8 @@ public class ChargerListAdapter extends RecyclerView.Adapter<ChargerListAdapter.
                     }
                 });
             } else {
-                itemView.findViewById(R.id.chargerView2).setVisibility(View.GONE);
-                itemView.findViewById(R.id.space).setVisibility(View.GONE);
+                itemView.findViewById(R.id.cu_group_2).setVisibility(View.GONE);
+                itemView.findViewById(R.id.cu_group_spacing).setVisibility(View.GONE);
             }
         }
     }

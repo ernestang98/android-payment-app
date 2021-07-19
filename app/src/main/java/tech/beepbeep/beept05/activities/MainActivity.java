@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView chargerList = findViewById(R.id.list);
+        RecyclerView chargerList = findViewById(R.id.am_charger_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         chargerList.setLayoutManager(layoutManager);
         PagerSnapHelper snapHelper = new PagerSnapHelper();

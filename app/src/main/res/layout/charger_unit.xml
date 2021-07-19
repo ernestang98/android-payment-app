@@ -3,25 +3,26 @@
               xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="233dp" android:gravity="center" android:padding="10dp">
+              android:layout_height="233dp" android:gravity="center" android:padding="10dp"
+              android:id="@+id/cu_container">
     <androidx.cardview.widget.CardView
             android:layout_width="150dp"
             android:layout_height="match_parent"
             app:cardBackgroundColor="#4DC1C1C1"
-            app:cardCornerRadius="30dp" android:id="@+id/chargerView1"
+            app:cardCornerRadius="30dp" android:id="@+id/cu_group_1"
     >
         <LinearLayout
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent" android:id="@+id/cu_group_1_container">
             <TextView
                     android:text="AC1"
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView1"
+                    android:id="@+id/cu_group_1_container_header"
                     android:gravity="center_horizontal"
                     android:textSize="30dp" android:textColor="@color/black"
                     android:fontFamily="@font/montserrat_bold"/>
@@ -29,22 +30,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/charger_unit"
-                    android:id="@+id/imageView"/>
+                    android:id="@+id/cu_group_1_container_icon"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:gravity="center">
+                    android:layout_height="wrap_content" android:gravity="center"
+                    android:id="@+id/cu_group_1_container_subgroup">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_lightning"
-                        android:id="@+id/imageView11"
+                        android:id="@+id/cu_group_1_container_subgroup_icon"
                         android:layout_weight="1"/>
                 <TextView
                         android:text="22 kWh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView11"
+                        android:id="@+id/cu_group_1_container_subgroup_text"
                         android:layout_weight="1"
                         android:textSize="25dp" android:textColor="@color/dark_gray"
                         android:fontFamily="@font/poppins_light"/>
@@ -53,25 +55,25 @@
     </androidx.cardview.widget.CardView>
     <Space
             android:layout_width="20dp"
-            android:layout_height="wrap_content" android:id="@+id/space"/>
+            android:layout_height="wrap_content" android:id="@+id/cu_group_spacing"/>
     <androidx.cardview.widget.CardView
             android:layout_width="150dp"
             android:layout_height="match_parent"
             app:cardBackgroundColor="#4DC1C1C1"
-            app:cardCornerRadius="30dp" android:id="@+id/chargerView2"
+            app:cardCornerRadius="30dp" android:id="@+id/cu_group_2"
     >
         <LinearLayout
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent" android:id="@+id/cu_group_2_container">
             <TextView
                     android:text="AC1"
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2"
+                    android:id="@+id/cu_group_2_container_header"
                     android:gravity="center_horizontal"
                     android:textSize="30dp" android:textColor="@color/black"
                     android:fontFamily="@font/montserrat_bold"/>
@@ -79,22 +81,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/charger_unit"
-                    android:id="@+id/imageView2"/>
+                    android:id="@+id/cu_group_2_container_icon"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:gravity="center">
+                    android:layout_height="wrap_content" android:gravity="center"
+                    android:id="@+id/cu_group_2_container_subgroup">
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_lightning"
-                        android:id="@+id/imageView22"
+                        android:id="@+id/cu_group_2_container_subgroup_icon"
                         android:layout_weight="1"/>
                 <TextView
                         android:text="22 kWh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView22"
+                        android:id="@+id/cu_group_2_container_subgroup_text"
                         android:layout_weight="1"
                         android:textSize="25dp" android:textColor="@color/dark_gray"
                         android:fontFamily="@font/poppins_light"/>

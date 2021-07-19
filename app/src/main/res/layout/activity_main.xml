@@ -8,7 +8,7 @@
     tools:context=".activities.MainActivity">
 
     <ImageView
-            android:id="@+id/header"
+            android:id="@+id/am_header"
             android:layout_width="0dp"
             android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,28 +22,28 @@
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/am_subheader"
             android:textColor="@color/black"
             android:textSize="15dp"
             app:lineHeight="22.5dp"
             android:fontFamily="@font/poppins_light"
             android:gravity="center_horizontal" android:background="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/am_header"
             android:layout_marginTop="10dp"/>
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/am_charger_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
             android:orientation="horizontal"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/car"
-            android:background="#FFFFFF" app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/am_car_icon"
+            android:background="#FFFFFF" app:layout_constraintTop_toBottomOf="@+id/am_subheader"
             app:layout_constraintVertical_bias="0.19999999"/>
     <ImageView
-            android:id="@+id/car"
+            android:id="@+id/am_car_icon"
             android:layout_width="0dp"
             android:layout_height="100dp"
             app:srcCompat="@drawable/ic_car"

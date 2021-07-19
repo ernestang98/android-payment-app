@@ -5,18 +5,18 @@
               android:layout_height="400dp"
               android:layout_gravity="center"
               android:orientation="vertical"
-              android:background="@drawable/rec">
+              android:background="@drawable/rec" android:id="@+id/cp_container">
     <LinearLayout
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_gravity="start"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" android:id="@+id/cp_group_1">
         <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" android:id="@+id/cp_group_1_container">
             <ImageView
-                    android:id="@+id/iconNext"
+                    android:id="@+id/cp_group_1_container_close"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="right"
@@ -31,7 +31,7 @@
         <TextView
                 android:text="Please Enter Mobile Number"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/textView7" android:textSize="18dp"
+                android:layout_height="wrap_content" android:id="@+id/cp_header" android:textSize="18dp"
                 android:textColor="@color/dark_gray" android:fontFamily="@font/poppins_light"/>
         <EditText
                 android:hint="Enter here!"
@@ -41,28 +41,28 @@
                 android:inputType="phone"
                 android:background="@drawable/rec2" android:textSize="25dp" android:gravity="center"
                 android:paddingLeft="20dp" android:paddingRight="20dp" android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" android:textColor="@color/black" android:id="@+id/phone"/>
+                android:layout_marginBottom="10dp" android:textColor="@color/black" android:id="@+id/cp_phone"/>
     </LinearLayout>
     <LinearLayout
             android:gravity="center"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="120dp">
+            android:layout_height="wrap_content" android:layout_marginTop="120dp" android:id="@+id/cp_group_2">
         <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                 app:cardCornerRadius="20dp" app:cardBackgroundColor="@color/blue"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" android:id="@+id/cardView2"
+                app:layout_constraintTop_toBottomOf="@+id/ai_connection_status" android:id="@+id/cp_group_2_button"
         >
             <LinearLayout android:layout_width="wrap_content" android:layout_height="50dp"
                           android:paddingLeft="35dp"
-                          android:paddingRight="35dp">
+                          android:paddingRight="35dp" android:id="@+id/cp_group_2_button_container">
                 <TextView
                         android:textAlignment="center"
                         android:text="Start Charging"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/textView8"
+                        android:layout_height="wrap_content" android:id="@+id/cp_group_2_button_container_text"
                         android:layout_gravity="center" android:textColor="#FFFFFF" android:textSize="14dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
