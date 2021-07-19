@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_gravity="center"
+              android:orientation="vertical"
+              android:background="@color/light_blue">
+    <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:id="@+id/iconNext"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_close"
+                    android:layout_marginLeft="50dp" android:layout_marginStart="50dp" android:layout_marginTop="50dp"
+                    android:layout_marginBottom="30dp">
+            </ImageView>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:gravity="top"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" tools:srcCompat="@drawable/ic_location"
+                android:id="@+id/imageView5"/>
+        <TextView
+                android:text="Condo A"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView9"
+                android:gravity="center_horizontal" android:fontFamily="@font/poppins_light" android:textSize="18dp"
+                android:textColor="@color/black"/>
+        <TextView
+                android:text="AC1"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView14"
+                android:gravity="center_horizontal" android:fontFamily="@font/poppins_light" android:textSize="18dp"
+                android:textColor="@color/black"/>
+        <TextView
+                android:text="Jun 16, 6:13 PM"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView15"
+                android:gravity="center_horizontal" android:layout_marginTop="5dp" android:layout_marginBottom="25dp"/>
+        <TextView
+                android:text="$ 35.00"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView16"
+                android:gravity="center_horizontal" android:textSize="50dp" android:textColor="@color/black"
+                android:layout_marginBottom="25dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                android:id="@+id/linearLayout100"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center_horizontal|center_vertical" android:layout_marginBottom="25dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_wallet"
+                    android:id="@+id/imageView11"
+                    android:layout_marginRight="10dp" android:layout_marginEnd="10dp"/>
+            <TextView
+                    android:text="Payment Method: Credit Card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView11"
+                    android:textSize="14dp" android:textColor="@color/black" android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" android:id="@+id/linearLayout10"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:gravity="start">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_green_tick"
+                    android:id="@+id/imageView222"
+                    android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"/>
+            <TextView
+                    android:text="Total charge time: 2hrs 4mins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView222"
+                    android:textSize="12dp" android:textColor="@color/dark_gray" android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" android:id="@+id/linearLayout3"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:gravity="start" android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_green_tick"
+                    android:id="@+id/imageView333"
+                    android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"/>
+            <TextView
+                    android:text="Total charge amount: 151kWh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView333"
+                    android:textSize="12dp" android:textColor="@color/dark_gray" android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" android:id="@+id/linearLayout1"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:gravity="start">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_green_tick"
+                    android:id="@+id/imageView111"
+                    android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="80dp" android:layout_marginStart="80dp"/>
+            <TextView
+                    android:text="Charge Rate: $0.10/kWh (22kWh)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView111"
+                    android:textSize="12dp" android:textColor="@color/dark_gray" android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

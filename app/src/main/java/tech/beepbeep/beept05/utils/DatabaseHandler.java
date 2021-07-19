@@ -11,6 +11,13 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import tech.beepbeep.beept05.utils.Constants.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static tech.beepbeep.beept05.utils.Constants.SimpleDateFormatString;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -21,6 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String CHARGER_TABLE_ID = "charger_id";
     private static final String CHARGER_TABLE_PHONE_NUMBER = "charger_phone";
     private static final String CHARGER_TABLE_SESSION_ID = "charger_session" ;
+    private static final String CHARGER_TABLE_START_TIME = "charger_start" ;
     private static final String TAG = "DB-HANDLER";
 
     public DatabaseHandler(Context context) {
@@ -34,7 +42,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + "("
                 + CHARGER_TABLE_ID + " Text PRIMARY KEY,"
                 + CHARGER_TABLE_PHONE_NUMBER + " TEXT,"
-                + CHARGER_TABLE_SESSION_ID + " TEXT"
+                + CHARGER_TABLE_SESSION_ID + " TEXT,"
+                + CHARGER_TABLE_START_TIME + " TEXT"
                 + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
@@ -53,6 +62,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(CHARGER_TABLE_ID, chargerId);
         values.put(CHARGER_TABLE_PHONE_NUMBER, chargerPhoneNumber);
         values.put(CHARGER_TABLE_SESSION_ID, chargerSessionId);
+        Date d = new Date();
+        values.put(CHARGER_TABLE_START_TIME, d.toString());
         db.insert(CHARGER_TABLE, null, values);
         db.close();
     }
@@ -65,7 +76,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] {
                     CHARGER_TABLE_ID,
                     CHARGER_TABLE_PHONE_NUMBER,
-                    CHARGER_TABLE_SESSION_ID
+                    CHARGER_TABLE_SESSION_ID,
+                    CHARGER_TABLE_START_TIME
                 },
                 CHARGER_TABLE_ID + "=?",
                 new String[] {
@@ -88,7 +100,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] {
                         CHARGER_TABLE_ID,
                         CHARGER_TABLE_PHONE_NUMBER,
-                        CHARGER_TABLE_SESSION_ID
+                        CHARGER_TABLE_SESSION_ID,
+                        CHARGER_TABLE_START_TIME
                 },
                 CHARGER_TABLE_ID + "=?",
                 new String[] {
@@ -118,7 +131,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] {
                         CHARGER_TABLE_ID,
                         CHARGER_TABLE_PHONE_NUMBER,
-                        CHARGER_TABLE_SESSION_ID
+                        CHARGER_TABLE_SESSION_ID,
+                        CHARGER_TABLE_START_TIME
                 },
                 CHARGER_TABLE_ID + "=?",
                 new String[] {

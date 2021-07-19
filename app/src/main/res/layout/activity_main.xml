@@ -26,10 +26,11 @@
             android:textColor="@color/black"
             android:textSize="15dp"
             app:lineHeight="22.5dp"
-            android:fontFamily="monospace"
+            android:fontFamily="@font/poppins_light"
             android:gravity="center_horizontal" android:background="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/header"/>
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/header"
+            android:layout_marginTop="10dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="0dp"

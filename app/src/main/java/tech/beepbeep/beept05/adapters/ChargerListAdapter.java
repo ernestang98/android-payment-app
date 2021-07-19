@@ -79,13 +79,13 @@ public class ChargerListAdapter extends RecyclerView.Adapter<ChargerListAdapter.
             });
 
             textView1.setText(listOfChargers.get(firstHalf).getChargerName());
-            textView11.setText(listOfChargers.get(firstHalf).getChargerPower());
+            textView11.setText(listOfChargers.get(firstHalf).getChargerPower() + listOfChargers.get(firstHalf).getChargerPowerUnit());
 
             if (secondHalf < listOfChargers.size()) {
                 TextView textView2 = itemView.findViewById(R.id.textView2);
                 TextView textView22 = itemView.findViewById(R.id.textView22);
                 textView2.setText(listOfChargers.get(secondHalf).getChargerName());
-                textView22.setText(listOfChargers.get(secondHalf).getChargerPower());
+                textView22.setText(listOfChargers.get(secondHalf).getChargerPower() + listOfChargers.get(secondHalf).getChargerPowerUnit());
                 CardView cardView2 = itemView.findViewById(R.id.chargerView2);
                 cardView2.setOnClickListener(new View.OnClickListener() {
                     @Override

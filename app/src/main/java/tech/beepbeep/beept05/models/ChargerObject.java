@@ -11,8 +11,11 @@ public class ChargerObject implements Serializable {
     private String chargerId;
     private String chargerName;
     private String chargerPower;
+    private String chargerPowerUnit;
     private String chargerLocation;
     private String chargerPrice;
+    private String chargerCurrency;
+    private String chargerRate;
     private String chargerDescription;
     private Boolean chargerIsAvailable;
 
@@ -20,15 +23,21 @@ public class ChargerObject implements Serializable {
             String chargerId,
             String chargerName,
             String chargerPower,
+            String chargerPowerUnit,
             String chargerLocation,
+            String chargerCurrency,
             String chargerPrice,
+            String chargerRate,
             String chargerDescription
     ) {
         this.chargerId = chargerId;
         this.chargerName = chargerName;
         this.chargerPower = chargerPower;
+        this.chargerPowerUnit = chargerPowerUnit;
         this.chargerLocation = chargerLocation;
+        this.chargerCurrency = chargerCurrency;
         this.chargerPrice = chargerPrice;
+        this.chargerRate = chargerRate;
         this.chargerDescription = chargerDescription;
     }
 
@@ -88,6 +97,31 @@ public class ChargerObject implements Serializable {
         this.chargerIsAvailable = chargerIsAvailable;
     }
 
+    public String getChargerCurrency() {
+        return chargerCurrency;
+    }
+
+    public void setChargerCurrency(String chargerCurrency) {
+        this.chargerCurrency = chargerCurrency;
+    }
+
+    public String getChargerRate() {
+        return chargerRate;
+    }
+
+    public void setChargerRate(String chargerRate) {
+        this.chargerRate = chargerRate;
+    }
+
+    public String getChargerPowerUnit() {
+        return chargerPowerUnit;
+    }
+
+    public void setChargerPowerUnit(String chargerPowerUnit) {
+        this.chargerPowerUnit = chargerPowerUnit;
+    }
+
+
     @Override
     public String toString() {
         return "Charger Id: "
@@ -95,11 +129,11 @@ public class ChargerObject implements Serializable {
                 + "Charger Name: "
                 + this.chargerName
                 + ", Charger Power: "
-                + this.chargerPower
+                + this.chargerPower + " " + this.chargerPowerUnit
                 + ", Charger Location: "
                 + this.chargerLocation
                 + ", Charger Price: "
-                + this.chargerPrice
+                + this.chargerCurrency + this.chargerPrice + this.chargerRate
                 + ", Charger Description: "
                 + this.chargerDescription;
     }
