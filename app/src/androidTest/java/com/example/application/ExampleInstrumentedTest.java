@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05;
+package com.example.application;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;

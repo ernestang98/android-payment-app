@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05.utils;
+package com.example.application.utils;
 
 public class BeepDbHandlerException extends Exception {
 

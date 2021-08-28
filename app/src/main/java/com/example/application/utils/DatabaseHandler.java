@@ -1,23 +1,12 @@
-package tech.beepbeep.beept05.utils;
+package com.example.application.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.util.Log;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import tech.beepbeep.beept05.utils.Constants.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-
-import static tech.beepbeep.beept05.utils.Constants.SimpleDateFormatString;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 

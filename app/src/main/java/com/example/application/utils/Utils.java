@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05.utils;
+package com.example.application.utils;
 
 import android.content.Intent;
 import android.util.Log;
@@ -7,8 +7,6 @@ import android.view.View;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.UUID;
-
-import static androidx.core.app.ActivityCompat.startActivityForResult;
 
 public class Utils {
 

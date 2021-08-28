@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05.activities;
+package com.example.application.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,10 +18,10 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import com.google.gson.Gson;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-import tech.beepbeep.beept05.R;
-import tech.beepbeep.beept05.models.ChargerObject;
-import tech.beepbeep.beept05.utils.*;
+
+import com.example.application.R;
+import com.example.application.models.ChargerObject;
+import com.example.application.utils.*;
 
 import java.io.UnsupportedEncodingException;
 import java.text.*;
@@ -30,9 +30,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import static tech.beepbeep.beept05.utils.Constants.HHMMDateFormat12Hrs;
-import static tech.beepbeep.beept05.utils.Constants.SimpleDateFormatString;
-import static tech.beepbeep.beept05.utils.Utils.*;
+import static com.example.application.utils.Constants.HHMMDateFormat12Hrs;
+import static com.example.application.utils.Constants.SimpleDateFormatString;
+import static com.example.application.utils.Utils.*;
 
 // Charger ID -> NULL/PHONE
 // PHONE -> NULL/[{ CHARGER ID : SESSION ID }]

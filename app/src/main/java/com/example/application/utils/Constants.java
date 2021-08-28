@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05.utils;
+package com.example.application.utils;
 
 public final class Constants {
     public static final String SimpleDateFormatString = "EEE MMM dd HH:mm:ss zzz yyyy";

@@ -1,9 +1,9 @@
-package tech.beepbeep.beept05;
+package com.example.application;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import tech.beepbeep.beept05.activities.MainActivity;
+import com.example.application.activities.MainActivity;
 
 public class Main extends Activity {
 

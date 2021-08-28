@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05.adapters;
+package com.example.application.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
-import tech.beepbeep.beept05.R;
-import tech.beepbeep.beept05.activities.InfoActivity;
-import tech.beepbeep.beept05.models.ChargerObject;
-import tech.beepbeep.beept05.utils.ClickListener;
+import com.example.application.R;
+import com.example.application.activities.InfoActivity;
+import com.example.application.models.ChargerObject;
+import com.example.application.utils.ClickListener;
 
 import java.util.List;
 

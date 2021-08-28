@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="tech.beepbeep.beept05">
+          package="com.example.application">
 
     <uses-permission
             android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
@@ -14,12 +14,12 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.BeepT05">
         <activity
-                android:name=".activities.InfoActivity"
+                android:name="com.example.application.activities.InfoActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
-                android:name=".activities.MainActivity"
+                android:name="com.example.application.activities.MainActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".Main" android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name="com.example.application.Main" android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

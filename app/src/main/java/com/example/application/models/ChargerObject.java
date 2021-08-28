@@ -1,10 +1,6 @@
-package tech.beepbeep.beept05.models;
+package com.example.application.models;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Date;
 
 public class ChargerObject implements Serializable {
 

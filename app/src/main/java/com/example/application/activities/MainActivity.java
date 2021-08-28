@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05.activities;
+package com.example.application.activities;
 
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import tech.beepbeep.beept05.R;
-import tech.beepbeep.beept05.adapters.ChargerListAdapter;
-import tech.beepbeep.beept05.models.ChargerObject;
-import tech.beepbeep.beept05.utils.ClickListener;
+import com.example.application.R;
+import com.example.application.adapters.ChargerListAdapter;
+import com.example.application.models.ChargerObject;
+import com.example.application.utils.ClickListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;

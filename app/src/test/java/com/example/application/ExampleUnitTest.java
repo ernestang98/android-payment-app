@@ -1,4 +1,4 @@
-package tech.beepbeep.beept05;
+package com.example.application;
 
 import org.junit.Test;
 
