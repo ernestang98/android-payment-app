@@ -9,10 +9,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
@@ -37,6 +39,7 @@ import static com.example.application.utils.Utils.*;
 // Charger ID -> NULL/PHONE
 // PHONE -> NULL/[{ CHARGER ID : SESSION ID }]
 // https://stackoverflow.com/questions/25376688/how-to-store-all-keys-from-a-specific-value-from-sharedpreferences
+// https://stackoverflow.com/questions/6867076/getactionbar-returns-null
 public class InfoActivity extends AppCompatActivity {
 
     private static final int T05PRE_AUTH_CODE = 123;
@@ -63,8 +66,13 @@ public class InfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 //        db.dropTable();
 //        this.deleteDatabase("ChargerManager");
+//        db.tagDetailsToCharger("CHARGER-01", "123", "Mock Data");
 
         boolean launchEnding = getIntent().getBooleanExtra("launchEnding", false);
         @Nullable String timeStarted = getIntent().getStringExtra("startTime");
@@ -342,5 +350,13 @@ public class InfoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
      }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        finish();
+        startActivity(myIntent);
+        return true;
+    }
 
 }

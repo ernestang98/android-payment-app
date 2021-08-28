@@ -15,7 +15,7 @@
             android:theme="@style/Theme.BeepT05">
         <activity
                 android:name="com.example.application.activities.InfoActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar"/>
+                />
         <activity
                 android:name="com.example.application.activities.MainActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"/>
